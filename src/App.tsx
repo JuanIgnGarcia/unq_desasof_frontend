@@ -6,15 +6,17 @@ import Layout from "./components/Layout";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/favourites" element={<Favourites />} />
-        </Route>
-      </Routes>
-    </Router>
+    <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+      <Router>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/favourites" element={<Favourites />} />
+          </Route>
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
