@@ -5,16 +5,27 @@ import { ToastContainer, Bounce } from "react-toastify";
 import { Home } from "./pages/Home";
 import { Favourites } from "./pages/Favourites";
 import Layout from "./components/Layout";
+import { Navigate, Outlet } from "react-router-dom";
+
+const PrivateRoute = () => {
+  const token = localStorage.getItem("token");
+
+  return token ? <Outlet /> : <Navigate to="/login" replace />;
+};
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/favourites" element={<Favourites />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* need token */}
+        <Route element={<PrivateRoute />}>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/favourites" element={<Favourites />} />
+          </Route>
         </Route>
       </Routes>
 
