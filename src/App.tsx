@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import RegisterAdmin from "./pages/RegisterAdmin";
 import { ToastContainer, Bounce } from "react-toastify";
 import { Home } from "./pages/Home";
 import { Favourites } from "./pages/Favourites";
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/registerAdmin" element={<RegisterAdmin />} />
 
         {/* need token */}
         <Route element={<PrivateRoute />}>

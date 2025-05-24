@@ -4,13 +4,15 @@ import "../App.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const Register: React.FC = () => {
+const RegisterAdmin: React.FC = () => {
   const navigate = useNavigate();
 
   const [newUsername, setUsername] = useState<string>("");
   const [newPassword, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [samePassword, setSamePassword] = useState(true);
+
+  const [code, setCode] = useState<string>("");
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -40,7 +42,12 @@ const Register: React.FC = () => {
       toast.error("Las contraseñas no coinciden");
       return;
     }
-    API.register({
+    if (code.trim().toLowerCase() !== "admin") {
+      toast.error("El codigo es invalido");
+      return;
+    }
+
+    API.registerAdmin({
       username: newUsername,
       password: newPassword,
     })
@@ -104,6 +111,20 @@ const Register: React.FC = () => {
             style={{ width: "100%", padding: "8px", marginTop: "5px" }}
             value={newUsername}
             onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+
+        <div style={{ marginBottom: "15px" }}>
+          <label style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+            Codigo especial{" "}
+          </label>
+          <input
+            required
+            type="text"
+            className="input"
+            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
           />
         </div>
 
@@ -216,4 +237,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default RegisterAdmin;

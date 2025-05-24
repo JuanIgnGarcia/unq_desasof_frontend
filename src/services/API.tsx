@@ -57,6 +57,8 @@ export const handleApiError = (error: any): string => {
 const API = {
   login: (body: LoginRegisterBody) => request("post", "/user/login", body),
   register: (body: LoginRegisterBody) => request("post", "/user/buyer", body),
+  registerAdmin: (body: LoginRegisterBody) =>
+    request("post", "/user/admin", body),
 };
 
 // Types
