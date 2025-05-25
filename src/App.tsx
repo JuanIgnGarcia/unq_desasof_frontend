@@ -5,11 +5,15 @@ import { Navigate, Outlet } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RegisterAdmin from "./pages/RegisterAdmin";
+
+import Users from "./pages/Users";
+import Shopped from "./pages/Shoppeds";
+import Favorites from "./pages/Favorites";
+
 import Top5User from "./pages/Top5User";
 import Top5Shopped from "./pages/Top5Shopped";
 import Top5Favorites from "./pages/Top5Favorites";
 import { Home } from "./pages/Home";
-import { Favourites } from "./pages/Favourites";
 import Layout from "./components/Layout";
 
 const PrivateRoute = () => {
@@ -30,7 +34,9 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/favourites" element={<Favourites />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/shoppeds" element={<Shopped />} />
             <Route path="/top5/User" element={<Top5User />} />
             <Route path="/top5/Shopped" element={<Top5Shopped />} />
             <Route path="/top5/Favorite" element={<Top5Favorites />} />

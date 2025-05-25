@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig, Method, AxiosResponse } from "axios";
-import Top5Shopped from "../pages/Top5Shopped";
 
 const getToken = (): string => {
   const token = localStorage.getItem("token");
@@ -63,6 +62,9 @@ const API = {
   top5User: () => request("get", "/user/top5/users"),
   Top5Shopped: () => request("get", "/user/top5/shopped"),
   Top5Favorites: () => request("get", "/user/top5/favorites"),
+  users: () => request("get", "/user/all"),
+  shoppeds: () => request("get", "/shopped/all"),
+  favorites: () => request("get", "/favorites/all"),
 };
 
 // Types

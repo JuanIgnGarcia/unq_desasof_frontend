@@ -6,11 +6,17 @@ function Navbar() {
       <Link to="/">
         <button>Home</button>
       </Link>
-      <Link to="/favourites">
-        <button>Favoritos</button>
-      </Link>
       <Link to="/login">
         <button>Login</button>
+      </Link>
+      <Link to="/users">
+        <button>Users</button>
+      </Link>
+      <Link to="/shoppeds">
+        <button>Shoppeds</button>
+      </Link>
+      <Link to="/favorites">
+        <button>Favorites</button>
       </Link>
       <Link to="/top5/User">
         <button>Top 5 User</button>
