@@ -13,6 +13,9 @@ import Favorites from "./pages/Favorites";
 import Top5User from "./pages/Top5User";
 import Top5Shopped from "./pages/Top5Shopped";
 import Top5Favorites from "./pages/Top5Favorites";
+
+import SearchPage from "./pages/Search";
+
 import { Home } from "./pages/Home";
 import Layout from "./components/Layout";
 
@@ -40,6 +43,7 @@ function App() {
             <Route path="/top5/User" element={<Top5User />} />
             <Route path="/top5/Shopped" element={<Top5Shopped />} />
             <Route path="/top5/Favorite" element={<Top5Favorites />} />
+            <Route path="/search/:query" element={<SearchPage />} />
           </Route>
         </Route>
       </Routes>

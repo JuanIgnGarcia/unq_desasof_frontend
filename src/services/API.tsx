@@ -65,6 +65,8 @@ const API = {
   users: () => request("get", "/user/all"),
   shoppeds: () => request("get", "/shopped/all"),
   favorites: () => request("get", "/favorites/all"),
+  search_product: (query: string) =>
+    request("get", `/ml/search?query=${encodeURIComponent(query)}`),
 };
 
 // Types
