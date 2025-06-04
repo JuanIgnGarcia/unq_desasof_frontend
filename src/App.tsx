@@ -27,41 +27,43 @@ const PrivateRoute = () => {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/registerAdmin" element={<RegisterAdmin />} />
+    <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/registerAdmin" element={<RegisterAdmin />} />
 
-        {/* need token */}
-        <Route element={<PrivateRoute />}>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/shoppeds" element={<Shopped />} />
-            <Route path="/top5/User" element={<Top5User />} />
-            <Route path="/top5/Shopped" element={<Top5Shopped />} />
-            <Route path="/top5/Favorite" element={<Top5Favorites />} />
-            <Route path="/search/:query" element={<SearchPage />} />
+          {/* need token */}
+          <Route element={<PrivateRoute />}>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/shoppeds" element={<Shopped />} />
+              <Route path="/top5/User" element={<Top5User />} />
+              <Route path="/top5/Shopped" element={<Top5Shopped />} />
+              <Route path="/top5/Favorite" element={<Top5Favorites />} />
+              <Route path="/search/:query" element={<SearchPage />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
 
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-      />
-    </Router>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
+      </Router>
+    </div>
   );
 }
 
