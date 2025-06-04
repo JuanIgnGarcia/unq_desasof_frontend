@@ -1,10 +1,10 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
-import { FaSearch, FaShoppingCart, FaRegUserCircle, FaBars, FaAngleLeft } from "react-icons/fa";
+//import { FaSearch, FaShoppingCart, FaRegUserCircle, FaBars, FaAngleLeft } from "react-icons/fa";
 import { useState } from "react";
 
 function Navbar() {
-  const [visible, setVisible] = useState(false);
+  //const [visible, setVisible] = useState(false);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
@@ -59,7 +59,13 @@ function Navbar() {
           <button>Top 5 Favorites</button>
         </Link>
 
-        <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={handleKeyDown} placeholder="Buscar..." />
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Buscar..."
+        />
         <button onClick={handleSearch}>Buscar</button>
       </ul>
     </div>
