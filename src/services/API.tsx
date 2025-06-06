@@ -67,6 +67,7 @@ const API = {
   favorites: () => request("get", "/favorites/all"),
   search_product: (query: string) =>
     request("get", `/ml/search?query=${encodeURIComponent(query)}`),
+  isAdmin: (userid: string) => request("get", `/user/isAdmin/${userid}`),
 };
 
 // Types
