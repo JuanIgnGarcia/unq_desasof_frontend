@@ -68,9 +68,10 @@ const API = {
   search_product: (query: string) =>
     request("get", `/ml/search?query=${encodeURIComponent(query)}`),
   isAdmin: (userid: string) => request("get", `/user/isAdmin/${userid}`),
-
   buyProduct: (userid: string, body: BuyProductBody) =>
     request("post", `/user/buy/${userid}`, body),
+  addFavorite: (userid: string, body: AddFavoriteBody) =>
+    request("post", `/user/addFavorite/${userid}`, body),
 };
 
 // Types
@@ -82,6 +83,15 @@ interface LoginRegisterBody {
 interface BuyProductBody {
   amount: number;
   price: number;
+  product_id: number;
+  product_id_ml: string;
+  product_title: string;
+  product_url: string;
+}
+
+interface AddFavoriteBody {
+  score: number;
+  comment: string;
   product_id: number;
   product_id_ml: string;
   product_title: string;

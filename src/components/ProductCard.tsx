@@ -46,6 +46,26 @@ const ProductCard: React.FC<ProductCardProps> = ({
     onRatingChange?.(id, newRating);
   };
 
+  const handleAddFavorite = () => {
+    const idUser: string = localStorage.getItem("id") || "";
+
+    API.addFavorite(idUser, {
+      score: rating,
+      comment: comment,
+      product_id: 100,
+      product_id_ml: id,
+      product_title: name,
+      product_url: imageUrl,
+    })
+      .then((res) => {
+        if (!res) return;
+        toast.success("add fovorite made successfully");
+      })
+      .catch((error) => {
+        toast.error(handleApiError(error));
+      });
+  };
+
   const handleBuyClick = () => {
     if (quantity > 0) {
       onBuy?.(id, quantity, price);
@@ -82,7 +102,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex justify-between items-start">
           <h2 className="text-lg font-semibold">{name}</h2>
           <button
-            onClick={() => onRemove(id)}
+            onClick={handleAddFavorite}
             className="text-red-500 hover:text-red-600 transition"
             title="Eliminar de favoritos"
           >
