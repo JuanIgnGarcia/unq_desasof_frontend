@@ -13,6 +13,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     localStorage.removeItem("token");
+    localStorage.removeItem("id");
   }, []);
 
   const handleEnter = (
@@ -34,10 +35,11 @@ const Login: React.FC = () => {
         toast.success("Logeado exitosamente");
 
         const token = res.data.token;
-        localStorage.setItem("token", token);
+        const id = res.data.id;
 
-        console.log("token");
-        console.log(token);
+        localStorage.setItem("token", token);
+        localStorage.setItem("id", id);
+
         navigate("/");
       })
       .catch((error) => {
