@@ -26,12 +26,26 @@ export function Home() {
   const handleCommentChange = (id: string, comment: string) => {
     console.log(`Nuevo comentario para ${id}: `, comment);
   };
+
+  const handleBuy = (id: string, quantity: number, price: number) => {
+    console.log(`Comprar producto ${id} en cantidad: ${quantity} por ${price}`);
+  };
+
   return (
     <>
       <h1>Esta es la homepage!</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-2">
         {mockProducts.map((product) => (
-          <ProductCard key={product.id} {...product} initialComment={product.comment} onRemove={handleRemove} onCommentChange={handleCommentChange} />
+          <ProductCard
+            key={product.id}
+            {...product}
+            initialComment={product.comment}
+            price={product.price || 0}
+            imageUrl={product.imageUrl || ""}
+            onRemove={handleRemove}
+            onCommentChange={handleCommentChange}
+            onBuy={handleBuy}
+          />
         ))}
       </div>
     </>

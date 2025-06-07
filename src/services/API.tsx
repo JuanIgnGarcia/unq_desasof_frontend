@@ -68,12 +68,24 @@ const API = {
   search_product: (query: string) =>
     request("get", `/ml/search?query=${encodeURIComponent(query)}`),
   isAdmin: (userid: string) => request("get", `/user/isAdmin/${userid}`),
+
+  buyProduct: (userid: string, body: BuyProductBody) =>
+    request("post", `/user/buy/${userid}`, body),
 };
 
 // Types
 interface LoginRegisterBody {
   username: string;
   password: string;
+}
+
+interface BuyProductBody {
+  amount: number;
+  price: number;
+  product_id: number;
+  product_id_ml: string;
+  product_title: string;
+  product_url: string;
 }
 
 export default API;
