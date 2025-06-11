@@ -24,7 +24,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   imageUrl,
   initialRating = 5,
   initialComment = "",
-  onRemove,
+  //onRemove,
   onCommentChange,
   onRatingChange,
   onBuy,
