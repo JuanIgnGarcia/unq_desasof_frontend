@@ -23,18 +23,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Start React app
-        run: npm run dev &
+      - name: Build app
+        run: npm run build
+
+      - name: Serve app
+        run: npx vite preview --port 3000 &
         env:
           CI: true
 
       - name: Wait for app to be ready
-        uses: jakejarvis/wait-action@master
+        uses: jakejarvis/wait-action@v0.1.0
         with:
-          url: "http://localhost:3000"
-
-      - name: Wait for app to load
-        run: sleep 30
+          url: http://localhost:3000
+          timeout: 60
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
