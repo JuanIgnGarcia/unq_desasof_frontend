@@ -92,11 +92,9 @@ describe("Register Page", () => {
 
     cy.get("button").contains("Registrar").click({ force: true });
 
-    cy.wait("@mockRegister");
-
     cy.url().should("include", "/register");
 
-    cy.contains("Error del cliente.");
+    cy.contains("Las contraseñas no coinciden");
   });
 
   it("should show error on register without password but with confirm password", () => {
@@ -112,10 +110,8 @@ describe("Register Page", () => {
 
     cy.get("button").contains("Registrar").click({ force: true });
 
-    cy.wait("@mockRegister");
-
     cy.url().should("include", "/register");
 
-    cy.contains("Error del cliente.");
+    cy.contains("Las contraseñas no coinciden");
   });
 });

@@ -84,6 +84,8 @@ describe("Admin Register Page", () => {
 
     cy.get("button").contains("Registrar").click({ force: true });
 
+    cy.url().should("include", "/registerAdmin");
+
     cy.contains("Las contraseñas no coinciden");
   });
 
@@ -101,6 +103,8 @@ describe("Admin Register Page", () => {
 
     cy.get("button").contains("Registrar").click({ force: true });
 
+    cy.url().should("include", "/registerAdmin");
+
     cy.contains("Las contraseñas no coinciden");
   });
 
@@ -117,6 +121,8 @@ describe("Admin Register Page", () => {
     cy.get('input[type="password"]').eq(1).type("password1");
 
     cy.get("button").contains("Registrar").click({ force: true });
+
+    cy.url().should("include", "/registerAdmin");
 
     cy.contains("El codigo es invalido");
   });
