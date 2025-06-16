@@ -45,12 +45,12 @@ function Navbar() {
   };
 
   return (
-    <div className="flex items-center py-5 font-medium px-4 gap-x-6">
-      <NavLink to="/">
+    <div className="w-full flex flex-col items-start px-4 py-5 font-medium">
+      <NavLink to="/" className="flex items-start">
         <img src={assets.logo_desasoft} className="w-14 rounded-full cursor-pointer" />
       </NavLink>
 
-      <ul className="flex gap-5 text-sm text-gray-700 items-center flex-wrap">
+      <ul className="w-full mt-4 flex justify-evenly gap-5 text-sm text-gray-700 flex-wrap">
         <NavLink to="/" className="flex flex-col items-center gap-1">
           <p>Home</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
