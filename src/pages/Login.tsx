@@ -30,7 +30,6 @@ const Login: React.FC = () => {
         if (!res) return;
 
         toast.success("Logeado exitosamente");
-
         const token = res.data.token;
 
         localStorage.setItem("token", token);
