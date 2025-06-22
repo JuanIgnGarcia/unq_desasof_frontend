@@ -1,25 +1,35 @@
+import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import API, { handleApiError } from "../services/API";
+import { toast } from "react-toastify";
 
-const mockProducts = [
-  {
-    id: "1",
-    name: "Zapatillas de basquet Puma",
-    price: 125200.88,
-    imageUrl: "/src/assets/basket.jpg",
-    rating: 4,
-    comment: "Me hacen saltar alto",
-  },
-  {
-    id: "2",
-    name: "zapatillas de correr",
-    price: 36200.5,
-    imageUrl: "/src/assets/deportivas.webp",
-    rating: 3,
-    comment: "Dicen que son cómodas",
-  },
-];
+interface Picture {
+  id: string;
+  url: string;
+}
+
+interface Product {
+  id: string;
+  id_ml: string;
+  title: string;
+  url: string;
+}
+
+interface Favorite {
+  id: string;
+  score: number;
+  product: Product;
+  price: number;
+}
+
+const generateRandomPrice = (): number => {
+  const price = Math.floor(Math.random() * (100000 - 1000 + 1)) + 1000;
+  return price;
+};
 
 export function Home() {
+  const [favorites, setFavorites] = useState<Favorite[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const handleRemove = (id: string) => {
     console.log("Eliminar product con ID: ", id);
   };
@@ -31,20 +41,38 @@ export function Home() {
     console.log(`Comprar producto ${id} en cantidad: ${quantity} por ${price}`);
   };
 
+  useEffect(() => {
+    setLoading(true);
+
+    API.userFavorites()
+      .then((res) => {
+        const resultsWithPrice = res.data.map((item: Favorite) => ({
+          ...item,
+          price: generateRandomPrice(),
+        }));
+        setFavorites(resultsWithPrice);
+        setLoading(false);
+      })
+      .catch((error) => {
+        toast.error(handleApiError(error));
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <>
-      <h1>Esta es la homepage!</h1>
+      <h1>Bienvenido a Seguí tus compras</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-2">
-        {mockProducts.map((product) => (
+        {favorites.map((favorite) => (
           <ProductCard
-            key={product.id}
-            {...product}
-            initialComment={product.comment}
-            price={product.price || 0}
-            imageUrl={product.imageUrl || ""}
+            key={favorite.id}
+            id={favorite.id}
+            name={favorite.product.title}
+            price={favorite.price}
             onRemove={handleRemove}
             onCommentChange={handleCommentChange}
             onBuy={handleBuy}
+            imageUrl={null}
           />
         ))}
       </div>
