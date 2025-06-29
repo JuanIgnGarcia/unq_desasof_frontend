@@ -9,7 +9,7 @@ interface Picture {
 }
 
 interface Product {
-  id: string;
+  id: number;
   id_ml: string;
   title: string;
   url: string;
@@ -20,6 +20,7 @@ interface Favorite {
   score: number;
   product: Product;
   price: number;
+  comment: string;
 }
 
 const generateRandomPrice = (): number => {
@@ -29,7 +30,6 @@ const generateRandomPrice = (): number => {
 
 export function Home() {
   const [favorites, setFavorites] = useState<Favorite[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
   const handleRemove = (id: string) => {
     console.log("Eliminar product con ID: ", id);
   };
@@ -37,13 +37,11 @@ export function Home() {
     console.log(`Nuevo comentario para ${id}: `, comment);
   };
 
-  const handleBuy = (id: string, quantity: number, price: number) => {
-    console.log(`Comprar producto ${id} en cantidad: ${quantity} por ${price}`);
+  const handleBuy = (productId: number, quantity: number, price: number) => {
+    console.log(`Comprar producto ${productId} en cantidad: ${quantity} por ${price}`);
   };
 
   useEffect(() => {
-    setLoading(true);
-
     API.userFavorites()
       .then((res) => {
         const resultsWithPrice = res.data.map((item: Favorite) => ({
@@ -51,11 +49,9 @@ export function Home() {
           price: generateRandomPrice(),
         }));
         setFavorites(resultsWithPrice);
-        setLoading(false);
       })
       .catch((error) => {
         toast.error(handleApiError(error));
-        setLoading(false);
       });
   }, []);
 
@@ -67,12 +63,15 @@ export function Home() {
           <ProductCard
             key={favorite.id}
             id={favorite.id}
+            productId={favorite.product.id}
             name={favorite.product.title}
             price={favorite.price}
             onRemove={handleRemove}
             onCommentChange={handleCommentChange}
             onBuy={handleBuy}
-            imageUrl={null}
+            imageUrl={favorite.product.url}
+            initialComment={favorite.comment}
+            mlProdId={favorite.product.id_ml || ""}
           />
         ))}
       </div>

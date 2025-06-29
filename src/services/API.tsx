@@ -17,6 +17,8 @@ const request = async (type: Method, path: string, body?: Record<string, any>): 
     headers: {
       "Content-Type": "application/json",
       Authorization: getToken(),
+      // La linea de abajo hubo que agregarla también para que CORS no falle.
+      "Access-Control-Allow-Origin": true,
     },
     // Antes esto estaba en true. Hubo que cambiarlo para que CORS no se queje.
     withCredentials: false,
