@@ -1,3 +1,5 @@
+[![CI](https://github.com/JuanIgnGarcia/unq_desasof_frontend/actions/workflows/Pipeline.yml/badge.svg)](https://github.com/JuanIgnGarcia/unq_desasof_frontend/actions/workflows/Pipeline.yml)
+
 # unq_desasof_frontend
 
 

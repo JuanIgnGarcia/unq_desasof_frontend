@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 
 interface ProductCardProps {
   id: string;
+  productId: number;
+  mlProdId: string;
   name: string;
   price: number;
   imageUrl: string;
@@ -14,7 +16,7 @@ interface ProductCardProps {
   onRemove: (id: string) => void;
   onCommentChange?: (id: string, comment: string) => void;
   onRatingChange?: (id: string, rating: number) => void;
-  onBuy?: (id: string, quantity: number, price: number) => void;
+  onBuy?: (id: number, quantity: number, price: number) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -23,7 +25,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   price,
   imageUrl,
   initialRating = 5,
-  initialComment = "",
+  initialComment,
+  productId,
+  mlProdId,
   // onRemove,
   onCommentChange,
   onRatingChange,
@@ -50,8 +54,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
     API.addFavorite({
       score: rating,
       comment: comment,
-      product_id: 100,
-      product_id_ml: id,
+      // TODO Seguir por acá, que el productID se use para llamar a las compras.
+      product_id: productId,
+      product_id_ml: mlProdId,
       product_title: name,
       product_url: imageUrl,
     })
@@ -66,13 +71,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const handleBuyClick = () => {
     if (quantity > 0) {
-      onBuy?.(id, quantity, price);
+      onBuy?.(productId, quantity, price);
 
       API.buyProduct({
         amount: quantity,
         price: price,
-        product_id: 100,
-        product_id_ml: id,
+        product_id: productId,
+        product_id_ml: mlProdId,
         product_title: name,
         product_url: imageUrl,
       })

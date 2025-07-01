@@ -30,7 +30,6 @@ const Login: React.FC = () => {
         if (!res) return;
 
         toast.success("Logeado exitosamente");
-
         const token = res.data.token;
 
         localStorage.setItem("token", token);
@@ -43,95 +42,46 @@ const Login: React.FC = () => {
   };
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#f0f2f5",
-        fontFamily: "Arial, sans-serif",
-        padding: "2rem",
-      }}
-    >
-      <div
-        style={{
-          background: "white",
-          padding: "3rem",
-          borderRadius: "15px",
-          boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
-          width: "100%",
-          maxWidth: "600px",
-        }}
-      >
-        <h1
-          style={{
-            textAlign: "center",
-            marginBottom: "2rem",
-            fontSize: "2rem",
-          }}
-        >
-          Iniciar Sesión
-        </h1>
+    <main className="min-h-screen w-full flex justify-center items-center bg-white p-8">
+      <div id="login-card" className="bg-gray-200 p-12 rounded-xl shadow-2xl shadow-gray-500 w-full max-w-xl space-y-8">
+        <h1 className="text-center text-4xl">Iniciar Sesión</h1>
 
-        <div style={{ marginBottom: "1.5rem" }}>
-          <label style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Username</label>
+        <div id="username-input-section">
+          <label className="font-bold text-lg block mb-2">Username</label>
           <input
+            placeholder="Ingresá tu usuario"
             required
             type="text"
             value={insUsername}
             onChange={(e) => setInsUsername(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "0.75rem",
-              marginTop: "0.5rem",
-              fontSize: "1rem",
-              borderRadius: "8px",
-              border: "1px solid #ccc",
-            }}
+            className="bg-white w-full p-3 text-base rounded-lg border-gray-400 border"
           />
         </div>
 
-        <div style={{ marginBottom: "2rem" }}>
-          <label style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Contraseña</label>
-          <div style={{ display: "flex", marginTop: "0.5rem" }}>
+        <div id="password-input-section">
+          <label className="font-bold text-lg block mb-2">Contraseña</label>
+          <div className="flex">
             <input
+              placeholder="Ingresá tu contraseña"
               required
               type={showPassword ? "text" : "password"}
               value={insPassword}
               onChange={(e) => setInsPassword(e.target.value)}
               onKeyDown={handleEnter}
-              style={{
-                flex: 1,
-                padding: "0.75rem",
-                fontSize: "1rem",
-                borderTopLeftRadius: "8px",
-                borderBottomLeftRadius: "8px",
-                border: "1px solid #ccc",
-                borderRight: "none",
-              }}
+              className="bg-white flex-1 p-3 text-base rounded-l-lg border-gray-400 border border-r-0"
             />
             <button
               type="button"
+              id="show-password-button"
               onClick={() => setShowPassword(!showPassword)}
-              style={{
-                padding: "0.75rem 1rem",
-                fontSize: "1rem",
-                border: "1px solid #ccc",
-                borderLeft: "none",
-                borderTopRightRadius: "8px",
-                borderBottomRightRadius: "8px",
-                background: "#e0e0e0",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
+              className="bg-gray-300 px-4 py-3 text-base border border-gray-400 border-l-0 rounded-r-lg cursor-pointer font-bold"
             >
               {showPassword ? "Hide" : "Show"}
             </button>
           </div>
         </div>
 
-        <div style={{ textAlign: "center" }}>
+        <div>
           <button className="button-66" role="button" onClick={handleLogin} onKeyDown={handleEnter}>
             Ingresar
           </button>
