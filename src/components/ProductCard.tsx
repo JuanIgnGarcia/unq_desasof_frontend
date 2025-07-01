@@ -24,7 +24,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   imageUrl,
   initialRating = 5,
   initialComment = "",
-  onRemove,
+  // onRemove,
   onCommentChange,
   onRatingChange,
   onBuy,
@@ -47,9 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const handleAddFavorite = () => {
-    const idUser: string = localStorage.getItem("id") || "";
-
-    API.addFavorite(idUser, {
+    API.addFavorite({
       score: rating,
       comment: comment,
       product_id: 100,
@@ -70,9 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     if (quantity > 0) {
       onBuy?.(id, quantity, price);
 
-      const idUser: string = localStorage.getItem("id") || "";
-
-      API.buyProduct(idUser, {
+      API.buyProduct({
         amount: quantity,
         price: price,
         product_id: 100,
@@ -101,11 +97,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="p-4 flex flex-col gap-2">
         <div className="flex justify-between items-start">
           <h2 className="text-lg font-semibold">{name}</h2>
-          <button
-            onClick={handleAddFavorite}
-            className="text-red-500 hover:text-red-600 transition"
-            title="Eliminar de favoritos"
-          >
+          <button onClick={handleAddFavorite} className="text-red-500 hover:text-red-600 transition" title="Eliminar de favoritos">
             <AiFillHeart size={20} />
           </button>
         </div>
@@ -115,12 +107,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Rating Stars */}
         <div className="flex items-center gap-1">
           {Array.from({ length: 10 }, (_, i) => (
-            <AiFillStar
-              key={i}
-              size={16}
-              onClick={() => handleStarClick(i)}
-              className={i < rating ? "text-yellow-400" : "text-gray-300"}
-            />
+            <AiFillStar key={i} size={16} onClick={() => handleStarClick(i)} className={i < rating ? "text-yellow-400" : "text-gray-300"} />
           ))}
         </div>
 
@@ -136,17 +123,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Quantity + Buy button */}
         <div className="flex items-center gap-2 mt-2">
-          <input
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            className="w-20 border rounded-md p-1 text-sm"
-            min={1}
-          />
-          <button
-            onClick={handleBuyClick}
-            className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600"
-          >
+          <input type="number" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} className="w-20 border rounded-md p-1 text-sm" min={1} />
+          <button onClick={handleBuyClick} className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600">
             Buy
           </button>
         </div>

@@ -15,9 +15,8 @@ function Navbar() {
 
   useEffect(() => {
     setLoading(true);
-    const idUser: string = localStorage.getItem("id") || "";
 
-    API.isAdmin(idUser)
+    API.isAdmin()
       .then((res) => {
         setIsAdmin(res.data);
         setLoading(false);
@@ -42,17 +41,13 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("id");
     navigate("/login");
   };
 
   return (
     <div className="flex items-center py-5 font-medium px-4 gap-x-6">
       <NavLink to="/">
-        <img
-          src={assets.logo_desasoft}
-          className="w-14 rounded-full cursor-pointer"
-        />
+        <img src={assets.logo_desasoft} className="w-14 rounded-full cursor-pointer" />
       </NavLink>
 
       <ul className="flex gap-5 text-sm text-gray-700 items-center flex-wrap">
@@ -64,10 +59,7 @@ function Navbar() {
           <>
             {/* solo no admin */}
             {!isAdmin && (
-              <NavLink
-                to="/favourites"
-                className="flex flex-col items-center gap-1"
-              >
+              <NavLink to="/favourites" className="flex flex-col items-center gap-1">
                 <p>Favourites</p>
                 <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
               </NavLink>
@@ -76,50 +68,32 @@ function Navbar() {
             {/* solo admins */}
             {isAdmin && (
               <>
-                <NavLink
-                  to="/users"
-                  className="flex flex-col items-center gap-1"
-                >
+                <NavLink to="/users" className="flex flex-col items-center gap-1">
                   <p>Users</p>
                   <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
                 </NavLink>
 
-                <NavLink
-                  to="/shoppeds"
-                  className="flex flex-col items-center gap-1"
-                >
+                <NavLink to="/shoppeds" className="flex flex-col items-center gap-1">
                   <p>Shoppeds</p>
                   <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
                 </NavLink>
 
-                <NavLink
-                  to="/favorites"
-                  className="flex flex-col items-center gap-1"
-                >
+                <NavLink to="/favorites" className="flex flex-col items-center gap-1">
                   <p>Favorites</p>
                   <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
                 </NavLink>
 
-                <NavLink
-                  to="/top5/User"
-                  className="flex flex-col items-center gap-1"
-                >
+                <NavLink to="/top5/User" className="flex flex-col items-center gap-1">
                   <p>Top 5 User</p>
                   <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
                 </NavLink>
 
-                <NavLink
-                  to="/top5/Shopped"
-                  className="flex flex-col items-center gap-1"
-                >
+                <NavLink to="/top5/Shopped" className="flex flex-col items-center gap-1">
                   <p>Top 5 Shopped</p>
                   <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
                 </NavLink>
 
-                <NavLink
-                  to="/top5/Favorite"
-                  className="flex flex-col items-center gap-1"
-                >
+                <NavLink to="/top5/Favorite" className="flex flex-col items-center gap-1">
                   <p>Top 5 Favorites</p>
                   <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
                 </NavLink>
@@ -129,24 +103,11 @@ function Navbar() {
         )}
 
         {/* Barra de búsqueda */}
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Buscar..."
-          className="px-2 py-1 border rounded"
-        />
-        <button
-          onClick={handleSearch}
-          className="px-3 py-1 bg-gray-200 rounded"
-        >
+        <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={handleKeyDown} placeholder="Buscar..." className="px-2 py-1 border rounded" />
+        <button onClick={handleSearch} className="px-3 py-1 bg-gray-200 rounded">
           Buscar
         </button>
-        <button
-          onClick={handleLogout}
-          className="px-3 py-1 bg-gray-200 rounded"
-        >
+        <button onClick={handleLogout} className="px-3 py-1 bg-gray-200 rounded">
           logout
         </button>
       </ul>

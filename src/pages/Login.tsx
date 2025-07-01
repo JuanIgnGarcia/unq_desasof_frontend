@@ -13,12 +13,9 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     localStorage.removeItem("token");
-    localStorage.removeItem("id");
   }, []);
 
-  const handleEnter = (
-    event: KeyboardEvent<HTMLInputElement | HTMLButtonElement>
-  ): void => {
+  const handleEnter = (event: KeyboardEvent<HTMLInputElement | HTMLButtonElement>): void => {
     if (event.key === "Enter") {
       handleLogin();
     }
@@ -35,10 +32,8 @@ const Login: React.FC = () => {
         toast.success("Logeado exitosamente");
 
         const token = res.data.token;
-        const id = res.data.id;
 
         localStorage.setItem("token", token);
-        localStorage.setItem("id", id);
 
         navigate("/");
       })
@@ -80,9 +75,7 @@ const Login: React.FC = () => {
         </h1>
 
         <div style={{ marginBottom: "1.5rem" }}>
-          <label style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-            Username
-          </label>
+          <label style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Username</label>
           <input
             required
             type="text"
@@ -100,9 +93,7 @@ const Login: React.FC = () => {
         </div>
 
         <div style={{ marginBottom: "2rem" }}>
-          <label style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-            Contraseña
-          </label>
+          <label style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Contraseña</label>
           <div style={{ display: "flex", marginTop: "0.5rem" }}>
             <input
               required
@@ -141,12 +132,7 @@ const Login: React.FC = () => {
         </div>
 
         <div style={{ textAlign: "center" }}>
-          <button
-            className="button-66"
-            role="button"
-            onClick={handleLogin}
-            onKeyDown={handleEnter}
-          >
+          <button className="button-66" role="button" onClick={handleLogin} onKeyDown={handleEnter}>
             Ingresar
           </button>
         </div>
