@@ -42,7 +42,8 @@ const UserShopped = () => {
               <th className="px-4 py-2">Imagen</th>
               <th className="px-4 py-2">Descripción</th>
               <th className="px-4 py-2">Cantidad</th>
-              <th className="px-4 py-2">Precio</th>
+              <th className="px-4 py-2">Precio unitario</th>
+              <th className="px-4 py-2">Precio total</th>
             </tr>
           </thead>
           <tbody>
@@ -54,6 +55,9 @@ const UserShopped = () => {
                 <td className="px-4 py-2">{purchase.product.title}</td>
                 <td className="px-4 py-2">{purchase.amount}</td>
                 <td className="px-4 py-2">{purchase.price}</td>
+                <td className="px-4 py-2">
+                  {purchase.amount} x {purchase.price} = {purchase.amount * purchase.price}
+                </td>
               </tr>
             ))}
           </tbody>
