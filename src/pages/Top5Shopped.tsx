@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import API, { handleApiError } from "../services/API";
 import { toast } from "react-toastify";
-import "./Top5User.css";
 
 interface Shopped {
   id: number;
@@ -32,22 +31,28 @@ const Top5Shopped = () => {
       {loading ? (
         <p>Cargando...</p>
       ) : (
-        <table className="user-table">
+        <table className="w-full table-auto border-collapse text-center text-xl">
           <thead>
-            <tr>
-              <th>ID</th>
-              <th>TITULO</th>
-              <th>TOTAL DE COMPRAS</th>
-              <th> </th>
+            <tr className="bg-gray-100">
+              <th className="px-9 py-3">ID</th>
+              <th className="px-4 py-3">TÍTULO</th>
+              <th className="px-4 py-3">TOTAL DE COMPRAS</th>
+              <th className="px-4 py-3">IMAGEN</th>
             </tr>
           </thead>
           <tbody>
             {shoppeds.map((shopped) => (
               <tr key={shopped.id}>
-                <td>{shopped.id}</td>
-                <td>{shopped.title}</td>
-                <td>{shopped.total_purchases}</td>
-                <td>{shopped.url}</td>
+                <td className="px-4 py-3">{shopped.id}</td>
+                <td className="px-4 py-3">{shopped.title}</td>
+                <td className="px-4 py-3">{shopped.total_purchases}</td>
+                <td className="px-4 py-3">
+                  <img
+                    src={shopped.url}
+                    className="h-20 mx-auto"
+                    alt="Imagen"
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

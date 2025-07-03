@@ -33,12 +33,14 @@ const UserShopped = () => {
 
   return (
     <>
-      <h1 className="text-4xl font-bold mb-6 text-gray-800">Historial de compras</h1>
+      <h1 className="text-4xl font-bold mb-6 text-gray-800">
+        Historial de compras
+      </h1>
 
       <div>
-        <table className="w-full table-auto border-collapse">
+        <table className="w-full table-auto border-collapse text-center">
           <thead>
-            <tr className="bg-gray-100 text-left">
+            <tr className="bg-gray-100 text-center">
               <th className="px-4 py-2">Imagen</th>
               <th className="px-4 py-2">Descripción</th>
               <th className="px-4 py-2">Cantidad</th>
@@ -56,7 +58,8 @@ const UserShopped = () => {
                 <td className="px-4 py-2">{purchase.amount}</td>
                 <td className="px-4 py-2">{purchase.price}</td>
                 <td className="px-4 py-2">
-                  {purchase.amount} x {purchase.price} = {purchase.amount * purchase.price}
+                  {purchase.amount} x {purchase.price} ={" "}
+                  {purchase.amount * purchase.price}
                 </td>
               </tr>
             ))}

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import API, { handleApiError } from "../services/API";
 import { toast } from "react-toastify";
-import "./Top5User.css";
 
 interface Favourite {
   id: number;
@@ -32,22 +31,28 @@ const Top5Favorites = () => {
       {loading ? (
         <p>Cargando...</p>
       ) : (
-        <table className="user-table">
+        <table className="w-full table-auto border-collapse text-center text-xl">
           <thead>
-            <tr>
-              <th>ID</th>
-              <th>TITULO</th>
-              <th>TOTAL DE FAVORITOS</th>
-              <th> </th>
+            <tr className="bg-gray-100">
+              <th className="px-9 py-3">ID</th>
+              <th className="px-9 py-3">TITULO</th>
+              <th className="px-9 py-3">TOTAL DE FAVORITOS</th>
+              <th className="px-9 py-3"> IMAGEN </th>
             </tr>
           </thead>
           <tbody>
             {favorites.map((favorite) => (
               <tr key={favorite.id}>
-                <td>{favorite.id}</td>
-                <td>{favorite.title}</td>
-                <td>{favorite.total_favorites}</td>
-                <td>{favorite.url}</td>
+                <td className="px-4 py-3">{favorite.id}</td>
+                <td className="px-4 py-3">{favorite.title}</td>
+                <td className="px-4 py-3">{favorite.total_favorites}</td>
+                <td className="px-4 py-3">
+                  <img
+                    src={favorite.url}
+                    className="h-20 mx-auto"
+                    alt="Imagen"
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

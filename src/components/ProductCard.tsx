@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import { AiFillHeart, AiFillStar } from "react-icons/ai";
+import { useState, useEffect } from "react";
+import { AiFillHeart, AiOutlineHeart, AiFillStar } from "react-icons/ai";
 import API, { handleApiError } from "../services/API";
 import { toast } from "react-toastify";
 
@@ -37,6 +37,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const [comment, setComment] = useState(initialComment ?? "");
   const [rating, setRating] = useState(initialRating);
   const [quantity, setQuantity] = useState(1);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  useEffect(() => {
+    API.isFavorite(mlProdId)
+      .then((res) => {
+        setIsFavorite(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -51,22 +62,33 @@ const ProductCard: React.FC<ProductCardProps> = ({
     onRatingChange?.(id, newRating);
   };
 
-  const handleAddFavorite = () => {
-    API.addFavorite({
-      score: rating,
-      comment: comment,
-      product_id: productId,
-      product_id_ml: mlProdId,
-      product_title: name,
-      product_url: imageUrl,
-    })
-      .then((res) => {
-        if (!res) return;
-        toast.success("Product added to favorites");
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      API.elimineFavorite(mlProdId)
+        .then(() => {
+          setIsFavorite(false);
+          toast.info("Producto eliminado de favoritos");
+        })
+        .catch((error) => {
+          toast.error(handleApiError(error));
+        });
+    } else {
+      API.addFavorite({
+        score: rating,
+        comment: comment,
+        product_id: productId,
+        product_id_ml: mlProdId,
+        product_title: name,
+        product_url: imageUrl,
       })
-      .catch((error) => {
-        toast.error(handleApiError(error));
-      });
+        .then(() => {
+          setIsFavorite(true);
+          toast.success("Producto añadido a favoritos");
+        })
+        .catch((error) => {
+          toast.error(handleApiError(error));
+        });
+    }
   };
 
   /*
@@ -110,8 +132,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="p-4 flex flex-col gap-2">
         <div className="flex justify-between items-start">
           <h2 className="text-lg font-semibold">{name}</h2>
-          <button onClick={handleAddFavorite} className="text-red-500 hover:text-red-600 transition" title="Eliminar de favoritos">
-            <AiFillHeart size={20} />
+          <button
+            onClick={handleToggleFavorite}
+            className={`transition text-xl ${
+              isFavorite
+                ? "text-red-500 hover:text-red-600"
+                : "text-gray-400 hover:text-red-400"
+            }`}
+            title={isFavorite ? "Eliminar de favoritos" : "Agregar a favoritos"}
+          >
+            {isFavorite ? <AiFillHeart /> : <AiOutlineHeart />}
           </button>
         </div>
 
@@ -120,7 +150,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Rating Stars */}
         <div className="flex items-center gap-1">
           {Array.from({ length: 10 }, (_, i) => (
-            <AiFillStar key={i} size={16} onClick={() => handleStarClick(i)} className={i < rating ? "text-yellow-400" : "text-gray-300"} />
+            <AiFillStar
+              key={i}
+              size={16}
+              onClick={() => handleStarClick(i)}
+              className={i < rating ? "text-yellow-400" : "text-gray-300"}
+            />
           ))}
         </div>
 
@@ -136,8 +171,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Quantity + Buy button */}
         <div className="flex items-center gap-2 mt-2">
-          <input type="number" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} className="w-20 border rounded-md p-1 text-sm" min={1} />
-          <button onClick={handleBuyClick} className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600">
+          <input
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="w-20 border rounded-md p-1 text-sm"
+            min={1}
+          />
+          <button
+            onClick={handleBuyClick}
+            className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600"
+          >
             Buy
           </button>
         </div>

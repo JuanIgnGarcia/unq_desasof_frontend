@@ -11,6 +11,18 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+
+    services:
+      backend:
+        image: toporu/unq_desasof:1.0.0
+        ports:
+          - 8000:8000
+        options: >-
+          --health-cmd "curl -f http://localhost:8000/docs || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
