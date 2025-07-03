@@ -9,7 +9,11 @@ axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.timeout = 10000;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const request = async (type: Method, path: string, body?: Record<string, any>): Promise<AxiosResponse<any>> => {
+const request = async (
+  type: Method,
+  path: string,
+  body?: Record<string, any>
+): Promise<AxiosResponse<any>> => {
   const config: AxiosRequestConfig = {
     url: path,
     method: type,
@@ -56,7 +60,8 @@ export const handleApiError = (error: any): string => {
 const API = {
   login: (body: LoginRegisterBody) => request("post", "/user/login", body),
   register: (body: LoginRegisterBody) => request("post", "/user/buyer", body),
-  registerAdmin: (body: LoginRegisterBody) => request("post", "/user/admin", body),
+  registerAdmin: (body: LoginRegisterBody) =>
+    request("post", "/user/admin", body),
   top5User: () => request("get", "/user/top5/users"),
   Top5Shopped: () => request("get", "/user/top5/shopped"),
   Top5Favorites: () => request("get", "/user/top5/favorites"),
@@ -64,11 +69,23 @@ const API = {
   userFavorites: () => request("get", "/user/favorite"),
   shoppeds: () => request("get", "/shopped/all"),
   favorites: () => request("get", "/favorites/all"),
-  search_product: (query: string) => request("get", `/ml/search?query=${encodeURIComponent(query)}`),
+  search_product: (query: string) =>
+    request("get", `/ml/search?query=${encodeURIComponent(query)}`),
   isAdmin: () => request("get", `/user/isAdmin`),
   buyProduct: (body: BuyProductBody) => request("post", `/user/buy`, body),
-  addFavorite: (body: AddFavoriteBody) => request("post", `/user/addFavorite`, body),
+  addFavorite: (body: AddFavoriteBody) =>
+    request("post", `/user/addFavorite`, body),
   userShopped: () => request("get", "/user/shopped"),
+  isFavorite: (product_id_ml: string) =>
+    request(
+      "get",
+      `/user/isFavorite?product_id_ml=${encodeURIComponent(product_id_ml)}`
+    ),
+  elimineFavorite: (product_id_ml: string) =>
+    request(
+      "post",
+      `/user/elimineFavorite?product_id_ml=${encodeURIComponent(product_id_ml)}`
+    ),
 };
 
 // Types
