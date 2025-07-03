@@ -59,8 +59,8 @@ function Navbar() {
           <>
             {/* solo no admin */}
             {!isAdmin && (
-              <NavLink to="/favourites" className="flex flex-col items-center gap-1">
-                <p>Favourites</p>
+              <NavLink to="/user/shopped" className="flex flex-col items-center gap-1">
+                <p>Shopped</p>
                 <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
               </NavLink>
             )}
