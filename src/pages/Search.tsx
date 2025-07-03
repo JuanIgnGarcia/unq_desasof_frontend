@@ -79,6 +79,8 @@ const SearchPage = () => {
             <ProductCard
               key={product.id}
               id={product.id}
+              productId={0}
+              mlProdId={product.id}
               name={product.name}
               price={Number(product.price?.replace(/\$|,/g, "")) || 0}
               imageUrl={product.pictures[0]?.url || ""}

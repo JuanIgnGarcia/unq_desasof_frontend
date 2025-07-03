@@ -16,7 +16,8 @@ interface ProductCardProps {
   onRemove: (id: string) => void;
   onCommentChange?: (id: string, comment: string) => void;
   onRatingChange?: (id: string, rating: number) => void;
-  onBuy?: (id: number, quantity: number, price: number) => void;
+  //onBuy?: (id: number, quantity: number, price: number) => void;
+  onBuy?: (id: string, quantity: number, price: number) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -33,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   onRatingChange,
   onBuy,
 }) => {
-  const [comment, setComment] = useState(initialComment);
+  const [comment, setComment] = useState(initialComment ?? "");
   const [rating, setRating] = useState(initialRating);
   const [quantity, setQuantity] = useState(1);
 
@@ -54,7 +55,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
     API.addFavorite({
       score: rating,
       comment: comment,
-      // TODO Seguir por acá, que el productID se use para llamar a las compras.
       product_id: productId,
       product_id_ml: mlProdId,
       product_title: name,
@@ -71,7 +71,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const handleBuyClick = () => {
     if (quantity > 0) {
-      onBuy?.(productId, quantity, price);
+      onBuy?.(id, quantity, price); // Argument of type 'number' is not assignable to parameter of type 'string'.
 
       API.buyProduct({
         amount: quantity,
@@ -102,7 +102,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="p-4 flex flex-col gap-2">
         <div className="flex justify-between items-start">
           <h2 className="text-lg font-semibold">{name}</h2>
-          <button onClick={handleAddFavorite} className="text-red-500 hover:text-red-600 transition" title="Eliminar de favoritos">
+          <button
+            onClick={handleAddFavorite}
+            className="text-red-500 hover:text-red-600 transition"
+            title="Eliminar de favoritos"
+          >
             <AiFillHeart size={20} />
           </button>
         </div>
@@ -112,7 +116,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Rating Stars */}
         <div className="flex items-center gap-1">
           {Array.from({ length: 10 }, (_, i) => (
-            <AiFillStar key={i} size={16} onClick={() => handleStarClick(i)} className={i < rating ? "text-yellow-400" : "text-gray-300"} />
+            <AiFillStar
+              key={i}
+              size={16}
+              onClick={() => handleStarClick(i)}
+              className={i < rating ? "text-yellow-400" : "text-gray-300"}
+            />
           ))}
         </div>
 
@@ -128,8 +137,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Quantity + Buy button */}
         <div className="flex items-center gap-2 mt-2">
-          <input type="number" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} className="w-20 border rounded-md p-1 text-sm" min={1} />
-          <button onClick={handleBuyClick} className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600">
+          <input
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="w-20 border rounded-md p-1 text-sm"
+            min={1}
+          />
+          <button
+            onClick={handleBuyClick}
+            className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600"
+          >
             Buy
           </button>
         </div>

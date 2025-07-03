@@ -3,11 +3,12 @@ import ProductCard from "../components/ProductCard";
 import API, { handleApiError } from "../services/API";
 import { toast } from "react-toastify";
 
+/*
 interface Picture {
   id: string;
   url: string;
 }
-
+*/
 interface Product {
   id: number;
   id_ml: string;
@@ -37,8 +38,17 @@ export function Home() {
     console.log(`Nuevo comentario para ${id}: `, comment);
   };
 
+  /*
   const handleBuy = (productId: number, quantity: number, price: number) => {
-    console.log(`Comprar producto ${productId} en cantidad: ${quantity} por ${price}`);
+    console.log(
+      `Comprar producto ${productId} en cantidad: ${quantity} por ${price}`
+    );
+  };
+*/
+  const handleBuy = (productId: string, quantity: number, price: number) => {
+    console.log(
+      `Comprar producto ${productId} en cantidad: ${quantity} por ${price}`
+    );
   };
 
   useEffect(() => {
