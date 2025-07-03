@@ -68,6 +68,7 @@ const API = {
   isAdmin: () => request("get", `/user/isAdmin`),
   buyProduct: (body: BuyProductBody) => request("post", `/user/buy`, body),
   addFavorite: (body: AddFavoriteBody) => request("post", `/user/addFavorite`, body),
+  userShopped: () => request("get", "/user/shopped"),
 };
 
 // Types

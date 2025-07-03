@@ -3,12 +3,6 @@ import ProductCard from "../components/ProductCard";
 import API, { handleApiError } from "../services/API";
 import { toast } from "react-toastify";
 
-/*
-interface Picture {
-  id: string;
-  url: string;
-}
-*/
 interface Product {
   id: number;
   id_ml: string;
@@ -46,9 +40,7 @@ export function Home() {
   };
 */
   const handleBuy = (productId: string, quantity: number, price: number) => {
-    console.log(
-      `Comprar producto ${productId} en cantidad: ${quantity} por ${price}`
-    );
+    console.log(`Comprar producto ${productId} en cantidad: ${quantity} por ${price}`);
   };
 
   useEffect(() => {
@@ -67,7 +59,7 @@ export function Home() {
 
   return (
     <>
-      <h1>Bienvenido a Seguí tus compras</h1>
+      <h1 className="text-4xl font-bold mb-6 text-gray-800">Lista de favoritos</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-2">
         {favorites.map((favorite) => (
           <ProductCard
