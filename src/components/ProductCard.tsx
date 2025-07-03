@@ -62,7 +62,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     })
       .then((res) => {
         if (!res) return;
-        toast.success("add fovorite made successfully");
+        toast.success("Product added to favorites");
       })
       .catch((error) => {
         toast.error(handleApiError(error));

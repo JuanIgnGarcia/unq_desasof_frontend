@@ -43,7 +43,7 @@ export function Home() {
   };
   */
 
-  const handleBuy = (productId: string, quantity: number, price: number) => {
+  const handleBuy = (productId: string, quantity: number) => {
     const product = favorites.find((f) => f.id === productId);
     if (product) {
       setSelectedProduct(product);
