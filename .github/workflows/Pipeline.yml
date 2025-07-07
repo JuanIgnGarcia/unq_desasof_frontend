@@ -12,45 +12,33 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
 
-    services:
-      backend:
-        image: toporu/unq_desasof:1.0.0
-        ports:
-          - 8000:8000
-        options: >-
-          --health-cmd "curl -f http://localhost:8000/docs || exit 1"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm install
+      - name: Checkout frontend repo
+        uses: actions/checkout@v4
 
-      - name: Build app
-        run: npm run build
-
-      - name: Serve app
-        run: npx vite preview --port 3000 &
-        env:
-          CI: true
-
-      - name: Wait for app to be ready
-        uses: jakejarvis/wait-action@v0.1.0
+      - name: Clone backend repo in backend folder
+        uses: actions/checkout@v4
         with:
-          url: http://localhost:3000
-          timeout: 60
+          repository: JuanIgnGarcia/unq_desasof_backend
+          path: backend
+
+      - name: Start backend
+        run: docker compose -f backend/docker-compose.yml up -d --build
+
+      - name: Wait for the backend to be ready
+        run: npx wait-on http://localhost:8000/health
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          wait-on: "http://localhost:3000"
+          start: npm run dev
+          wait-on: http://localhost:3000
           wait-on-timeout: 60
