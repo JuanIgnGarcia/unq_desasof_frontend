@@ -33,9 +33,6 @@ jobs:
       - name: Start backend
         run: docker compose -f backend/docker-compose.yml up -d --build
 
-      - name: Wait for the backend to be ready
-        run: npx wait-on http://localhost:8000/health
-
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
