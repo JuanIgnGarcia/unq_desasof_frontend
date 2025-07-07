@@ -1,4 +1,3 @@
-/*
 describe("Home Page", () => {
   beforeEach(() => {
     cy.visit("/login");
@@ -38,9 +37,6 @@ describe("Home Page", () => {
 
     cy.get("button").contains("Confirmar").click();
 
-    cy.contains("Compra realizada exitosamente", { timeout: 6000 }).should(
-      "be.visible"
-    );
+    cy.contains("Compra realizada exitosamente", { timeout: 6000 }).should("be.visible");
   });
 });
-*/
