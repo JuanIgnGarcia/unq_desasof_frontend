@@ -1,11 +1,13 @@
 import React from "react";
-import { useState } from "react";
-import { AiFillHeart, AiFillStar } from "react-icons/ai";
+import { useState, useEffect } from "react";
+import { AiFillHeart, AiOutlineHeart, AiFillStar } from "react-icons/ai";
 import API, { handleApiError } from "../services/API";
 import { toast } from "react-toastify";
 
 interface ProductCardProps {
   id: string;
+  productId: number;
+  mlProdId: string;
   name: string;
   price: number;
   imageUrl: string;
@@ -14,6 +16,7 @@ interface ProductCardProps {
   onRemove: (id: string) => void;
   onCommentChange?: (id: string, comment: string) => void;
   onRatingChange?: (id: string, rating: number) => void;
+  //onBuy?: (id: number, quantity: number, price: number) => void;
   onBuy?: (id: string, quantity: number, price: number) => void;
 }
 
@@ -23,15 +26,28 @@ const ProductCard: React.FC<ProductCardProps> = ({
   price,
   imageUrl,
   initialRating = 5,
-  initialComment = "",
-  onRemove,
+  initialComment,
+  productId,
+  mlProdId,
+  // onRemove,
   onCommentChange,
   onRatingChange,
   onBuy,
 }) => {
-  const [comment, setComment] = useState(initialComment);
+  const [comment, setComment] = useState(initialComment ?? "");
   const [rating, setRating] = useState(initialRating);
   const [quantity, setQuantity] = useState(1);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  useEffect(() => {
+    API.isFavorite(mlProdId)
+      .then((res) => {
+        setIsFavorite(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -46,37 +62,45 @@ const ProductCard: React.FC<ProductCardProps> = ({
     onRatingChange?.(id, newRating);
   };
 
-  const handleAddFavorite = () => {
-    const idUser: string = localStorage.getItem("id") || "";
-
-    API.addFavorite(idUser, {
-      score: rating,
-      comment: comment,
-      product_id: 100,
-      product_id_ml: id,
-      product_title: name,
-      product_url: imageUrl,
-    })
-      .then((res) => {
-        if (!res) return;
-        toast.success("add fovorite made successfully");
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      API.elimineFavorite(mlProdId)
+        .then(() => {
+          setIsFavorite(false);
+          toast.info("Producto eliminado de favoritos");
+        })
+        .catch((error) => {
+          toast.error(handleApiError(error));
+        });
+    } else {
+      API.addFavorite({
+        score: rating,
+        comment: comment,
+        product_id: productId,
+        product_id_ml: mlProdId,
+        product_title: name,
+        product_url: imageUrl,
       })
-      .catch((error) => {
-        toast.error(handleApiError(error));
-      });
+        .then(() => {
+          setIsFavorite(true);
+          toast.success("Producto añadido a favoritos");
+        })
+        .catch((error) => {
+          toast.error(handleApiError(error));
+        });
+    }
   };
 
+  /*
   const handleBuyClick = () => {
     if (quantity > 0) {
-      onBuy?.(id, quantity, price);
+      onBuy?.(id, quantity, price); // Argument of type 'number' is not assignable to parameter of type 'string'.
 
-      const idUser: string = localStorage.getItem("id") || "";
-
-      API.buyProduct(idUser, {
+      API.buyProduct({
         amount: quantity,
         price: price,
-        product_id: 100,
-        product_id_ml: id,
+        product_id: productId,
+        product_id_ml: mlProdId,
         product_title: name,
         product_url: imageUrl,
       })
@@ -87,6 +111,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
         .catch((error) => {
           toast.error(handleApiError(error));
         });
+    }
+  };
+  */
+
+  const handleBuyClick = () => {
+    if (quantity > 0) {
+      onBuy?.(id, quantity, price);
     }
   };
 
@@ -102,11 +133,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex justify-between items-start">
           <h2 className="text-lg font-semibold">{name}</h2>
           <button
-            onClick={handleAddFavorite}
-            className="text-red-500 hover:text-red-600 transition"
-            title="Eliminar de favoritos"
+            onClick={handleToggleFavorite}
+            className={`transition text-xl ${
+              isFavorite
+                ? "text-red-500 hover:text-red-600"
+                : "text-gray-400 hover:text-red-400"
+            }`}
+            title={isFavorite ? "Eliminar de favoritos" : "Agregar a favoritos"}
           >
-            <AiFillHeart size={20} />
+            {isFavorite ? <AiFillHeart /> : <AiOutlineHeart />}
           </button>
         </div>
 

@@ -28,6 +28,10 @@ const SearchPage = () => {
   const [searchResults, setSearchResults] = useState<Search[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Search | null>(null);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+
   useEffect(() => {
     if (!query) return;
 
@@ -61,8 +65,19 @@ const SearchPage = () => {
     );
   };
 
-  const handleBuy = (id: string, quantity: number, price: number) => {
-    console.log(`Comprar producto ${id} en cantidad: ${quantity} por ${price}`);
+  const handleBuy = (productId: string, quantity: number) => {
+    const product = searchResults.find((f) => f.id === productId);
+    if (product) {
+      setSelectedProduct(product);
+      setSelectedQuantity(quantity);
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProduct(null);
+    setSelectedQuantity(1);
+    setIsModalOpen(false);
   };
 
   return (
@@ -79,6 +94,8 @@ const SearchPage = () => {
             <ProductCard
               key={product.id}
               id={product.id}
+              productId={0}
+              mlProdId={product.id}
               name={product.name}
               price={Number(product.price?.replace(/\$|,/g, "")) || 0}
               imageUrl={product.pictures[0]?.url || ""}
@@ -90,6 +107,72 @@ const SearchPage = () => {
               onBuy={handleBuy}
             />
           ))}
+        </div>
+      )}
+
+      {isModalOpen && selectedProduct && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-white/10">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+            <h2 className="text-xl font-semibold mb-4">Confirmar compra</h2>
+
+            <div className="flex items-center gap-4">
+              <img
+                src={selectedProduct.pictures[0]?.url}
+                alt="Producto"
+                className="h-24 rounded"
+              />
+              <div>
+                <p className="font-bold">{selectedProduct.name}</p>
+                <p className="text-gray-600">Precio: {selectedProduct.price}</p>
+                <label className="block mt-2">
+                  Cantidad:
+                  <input
+                    type="number"
+                    min={1}
+                    value={selectedQuantity}
+                    onChange={(e) =>
+                      setSelectedQuantity(Number(e.target.value))
+                    }
+                    className="border border-gray-300 rounded px-2 py-1 w-20 ml-2"
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div className="flex justify-end mt-6 gap-2">
+              <button
+                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                onClick={handleCloseModal}
+              >
+                Cancelar
+              </button>
+              <button
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                onClick={() => {
+                  API.buyProduct({
+                    amount: selectedQuantity,
+                    price: Number(
+                      selectedProduct.price?.replace(/\$|,/g, "") || 0
+                    ),
+                    product_id: -1,
+                    product_id_ml: selectedProduct.id,
+                    product_title: selectedProduct.name,
+                    product_url: selectedProduct.pictures[0].url,
+                  })
+                    .then(() => {
+                      toast.success("Compra realizada exitosamente");
+                      handleCloseModal();
+                    })
+                    .catch((error) => {
+                      toast.error(handleApiError(error));
+                      console.error(error);
+                    });
+                }}
+              >
+                Confirmar compra
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

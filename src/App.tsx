@@ -9,6 +9,7 @@ import RegisterAdmin from "./pages/RegisterAdmin";
 import Users from "./pages/Users";
 import Shopped from "./pages/Shoppeds";
 import Favorites from "./pages/Favorites";
+import UserShopped from "./pages/UserShopped";
 
 import Top5User from "./pages/Top5User";
 import Top5Shopped from "./pages/Top5Shopped";
@@ -45,6 +46,7 @@ function App() {
               <Route path="/top5/Shopped" element={<Top5Shopped />} />
               <Route path="/top5/Favorite" element={<Top5Favorites />} />
               <Route path="/search/:query" element={<SearchPage />} />
+              <Route path="/user/shopped" element={<UserShopped />} />
             </Route>
           </Route>
         </Routes>
