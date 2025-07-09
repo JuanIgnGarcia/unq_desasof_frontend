@@ -20,13 +20,13 @@ import SearchPage from "./pages/Search";
 import { Home } from "./pages/Home";
 import Layout from "./components/Layout";
 
-const PrivateRoute = () => {
-  const token = localStorage.getItem("token");
-
-  return token ? <Outlet /> : <Navigate to="/login" replace />;
-};
-
 function App() {
+  const PrivateRoute = () => {
+    const token = localStorage.getItem("token");
+
+    return token ? <Outlet /> : <Navigate to="/login" replace />;
+  };
+
   return (
     <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
       <Router>
