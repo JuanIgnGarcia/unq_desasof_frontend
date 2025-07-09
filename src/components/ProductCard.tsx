@@ -13,27 +13,13 @@ interface ProductCardProps {
   imageUrl: string;
   initialRating?: number;
   initialComment?: string;
-  onRemove: (id: string) => void;
   onCommentChange?: (id: string, comment: string) => void;
   onRatingChange?: (id: string, rating: number) => void;
   //onBuy?: (id: number, quantity: number, price: number) => void;
   onBuy?: (id: string, quantity: number, price: number) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  id,
-  name,
-  price,
-  imageUrl,
-  initialRating = 5,
-  initialComment,
-  productId,
-  mlProdId,
-  // onRemove,
-  onCommentChange,
-  onRatingChange,
-  onBuy,
-}) => {
+const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, imageUrl, initialRating = 5, initialComment, productId, mlProdId, onCommentChange, onRatingChange, onBuy }) => {
   const [comment, setComment] = useState(initialComment ?? "");
   const [rating, setRating] = useState(initialRating);
   const [quantity, setQuantity] = useState(1);
@@ -134,11 +120,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <h2 className="text-lg font-semibold">{name}</h2>
           <button
             onClick={handleToggleFavorite}
-            className={`transition text-xl ${
-              isFavorite
-                ? "text-red-500 hover:text-red-600"
-                : "text-gray-400 hover:text-red-400"
-            }`}
+            className={`transition text-xl ${isFavorite ? "text-red-500 hover:text-red-600" : "text-gray-400 hover:text-red-400"}`}
             title={isFavorite ? "Eliminar de favoritos" : "Agregar a favoritos"}
           >
             {isFavorite ? <AiFillHeart /> : <AiOutlineHeart />}
@@ -150,12 +132,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Rating Stars */}
         <div className="flex items-center gap-1">
           {Array.from({ length: 10 }, (_, i) => (
-            <AiFillStar
-              key={i}
-              size={16}
-              onClick={() => handleStarClick(i)}
-              className={i < rating ? "text-yellow-400" : "text-gray-300"}
-            />
+            <AiFillStar key={i} size={16} onClick={() => handleStarClick(i)} className={i < rating ? "text-yellow-400" : "text-gray-300"} />
           ))}
         </div>
 
@@ -171,17 +148,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Quantity + Buy button */}
         <div className="flex items-center gap-2 mt-2">
-          <input
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            className="w-20 border rounded-md p-1 text-sm"
-            min={1}
-          />
-          <button
-            onClick={handleBuyClick}
-            className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600"
-          >
+          <input type="number" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} className="w-20 border rounded-md p-1 text-sm" min={1} />
+          <button onClick={handleBuyClick} className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600">
             Buy
           </button>
         </div>

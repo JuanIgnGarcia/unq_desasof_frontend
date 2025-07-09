@@ -30,18 +30,9 @@ export function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Favorite | null>(null);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 
-  const handleRemove = (id: string) => {
-    console.log("Eliminar product con ID: ", id);
-  };
   const handleCommentChange = (id: string, comment: string) => {
     console.log(`Nuevo comentario para ${id}: `, comment);
   };
-
-  /*
-    const handleBuy = (productId: string, quantity: number, price: number) => {
-    console.log(`Comprar producto ${productId} en cantidad: ${quantity} por ${price}`);
-  };
-  */
 
   const handleBuy = (productId: string, quantity: number) => {
     const product = favorites.find((f) => f.id === productId);
@@ -83,7 +74,6 @@ export function Home() {
             productId={favorite.product.id}
             name={favorite.product.title}
             price={favorite.price}
-            onRemove={handleRemove}
             onCommentChange={handleCommentChange}
             onBuy={handleBuy}
             imageUrl={favorite.product.url}

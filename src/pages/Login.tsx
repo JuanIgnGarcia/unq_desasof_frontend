@@ -8,7 +8,6 @@ const Login: React.FC = () => {
   const [insUsername, setInsUsername] = useState<string>("");
   const [insPassword, setInsPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +18,12 @@ const Login: React.FC = () => {
     if (event.key === "Enter") {
       handleLogin();
     }
+  };
+
+  const navigateAccordingly = (): void => {
+    API.isAdmin().then((res) => {
+      res.data ? navigate("/users") : navigate("/");
+    });
   };
 
   const handleLogin = (): void => {
@@ -34,7 +39,7 @@ const Login: React.FC = () => {
 
         localStorage.setItem("token", token);
 
-        navigate("/");
+        navigateAccordingly();
       })
       .catch((error) => {
         toast.error(handleApiError(error));

@@ -1,4 +1,4 @@
-name: Updload docker image
+name: Upload docker image
 
 on:
   push:

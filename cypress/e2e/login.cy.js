@@ -3,22 +3,23 @@ describe("Login Page", () => {
     cy.visit("/login");
   });
 
-  it("should login successfully with mocked response", () => {
-    cy.intercept("POST", "http://localhost:8000/user/login", {
-      statusCode: 200,
-      body: {
-        token: "fake-jwt-token",
-      },
-    }).as("mockLogin");
-
-    cy.get('input[type="text"]').type("user1");
-    cy.get('input[type="password"]').type("password1");
+  it("should login as user successfully", () => {
+    cy.get('input[type="text"]').type("buyer1");
+    cy.get('input[type="password"]').type("buyer1pass");
 
     cy.contains("Ingresar").click();
 
-    cy.wait("@mockLogin");
-
     cy.url().should("eq", `${Cypress.config().baseUrl}/`);
+    cy.contains("Logeado exitosamente");
+  });
+
+  it("should login as admin succesfully", () => {
+    cy.get('input[type="text"]').type("admin1");
+    cy.get('input[type="password"]').type("admin1pass");
+
+    cy.contains("Ingresar").click();
+
+    cy.url().should("eq", `${Cypress.config().baseUrl}/users`);
     cy.contains("Logeado exitosamente");
   });
 
