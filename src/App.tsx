@@ -32,7 +32,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          {/* <Route path="/register" element={<Register />} /> */}
           <Route path="/registerAdmin" element={<RegisterAdmin />} />
 
           {/* need token */}
